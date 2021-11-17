@@ -38,6 +38,8 @@ Required when when you first set up the project for local development or use OR 
 * [Expressjs](https://expressjs.com/) - Leveraged for API's, utility methods, and middleware.
 * [Compression](https://www.npmjs.com/package/compression) - Middleware for file compression.
 * [Lite-server](https://www.npmjs.com/package/lite-server) - Dev-only node server that serves the web app to open it in the browser, refresh it when html or javascript is changed, inject CSS changes using sockets, and has a fallback page if a route is not found.
+* [Webpack](https://www.npmjs.com/package/webpack) - Used for bundling modules.
+* [Webpack CLI](https://www.npmjs.com/package/webpack-cli) - Provides a flexible set of commands to increase set up speed on a custom webpack project.
 * [Webpack-PWA-Manifest](https://www.npmjs.com/package/webpack-pwa-manifest) - Plugin to generates a 'manifest.json' for this PWA.
 * [Chart.js](https://www.chartjs.org/) - Javascript charting
 * [Javascript](https://developer.mozilla.org/en-US/docs/Web/javascript) - Core app logic
