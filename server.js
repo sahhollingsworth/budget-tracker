@@ -22,7 +22,7 @@ app.use(express.static("public"));
 
 // Connecting to MongoDB via Mongoose
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/workout',
+  process.env.MONGODB_URI || 'mongodb://localhost/budgetDB',
   {
       useNewUrlParser: true,
       useUnifiedTopology: true,
