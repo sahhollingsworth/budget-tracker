@@ -92,7 +92,7 @@ self.addEventListener("fetch", function(evt) {
         );
         return;
     }
-
+    // If the request is not for an api endpoint, then serve the static assets
     evt.respondWith(
         caches.open(CACHE_NAME).then(cache => {
             return cache.match(evt.request).then(response => {
