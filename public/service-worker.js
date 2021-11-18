@@ -29,28 +29,6 @@ self.addEventListener('install', (event) => {
     );
 });
 
-// // Activation - Clear the cache of all items that aren't 1 of the 2 caches instantiated at the top
-// self.addEventListener("activate", event => {
-//     const currentCaches = [STATIC_CACHE, RUNTIME_CACHE];
-//     event.waitUntil(
-//         caches.keys()
-//         // Return and cache names that aren't current
-//         .then(cacheNames => {
-//             return cacheNames.filter((cacheName) => !currentCaches.includes(cacheName));
-//         })
-//         // Delete any cache names that arent current
-//         .then(cachesOther => {
-//             return Promise.all(
-//                 cachesOther.map(cacheOld => {
-//                     return caches.delete(cacheOld);
-//                 })
-//             );
-//         })
-//         // Force the waiting service worker to become the active service worker (reloads the service worker)
-//         .then(() => self.clients.claim())
-//     );
-// });
-
 // Clear the cache of all items that aren't 1 of the 2 caches instantiated at the top
 self.addEventListener("activate", function(evt) {
     evt.waitUntil(
