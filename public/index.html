@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="assets/css/styles.css">
 
+  <link rel="manifest" href="dist/manifest.json" />
   <title>Budget Tracker</title>
 </head>
 <body>
@@ -37,28 +38,34 @@
         </tbody>
       </table>
     </div>
-    
+
     <canvas id="myChart"></canvas>
-    <script src="dist/bundle.js"></script>
-    <script type="text/javascript">
-      // Check if browser supports service worker
-      if ("serviceWorker" in navigator) {
-        // On app load in browser
-        window.addeventListener("load", () => {
-          // If the service worker is already installed this will returnst the registration object of the currently active service worker, scope of which is in service-worker.js
-          navigator.serviceWorker.register("service-worker.js")
-          .then(reg => {
-            console.log("We found your service worker file!", reg)
-          })
-          .catch(err => {
-            console.log('Service worker registration failed, error:', error);
-          });
-        });
-      }
-  </script>
   </div>
   <!-- Shouldn't the bundle be enough?-->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="assets/js/index.js"></script>
+  <script src="assets/js/db.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+  <script src="dist/bundle.js"></script>
+  <script type="text/javascript">
+    // Check if browser supports service worker
+    if ("serviceWorker" in navigator) {
+      // On app load in browser
+      window.addeventListener("load", () => {
+        // If the service worker is already installed this will returnst the registration object of the currently active service worker, scope of which is in service-worker.js
+        navigator.serviceWorker.register("service-worker.js")
+        .then(reg => {
+          console.log("We found your service worker file!", reg)
+        })
+        .catch(err => {
+          console.log('Service worker registration failed, error:', error);
+        });
+      });
+    }
+  </script>
+  
+
+
 </body>
 </html>
