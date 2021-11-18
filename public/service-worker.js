@@ -1,23 +1,18 @@
-const STATIC_CACHE = "static-cache-v1";
-const RUNTIME_CACHE = "runtime-cache-v1";
+const STATIC_CACHE = "static-cache";
+const RUNTIME_CACHE = "runtime-cache";
 
 const FILES_TO_CACHE = [
     '/',
     '/assets/css/style.css',
     'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
+    'https://cdn.jsdelivr.net/npm/chart.js@2.8.0',
     '/index.html',
     '/index.js',
     '/db.js',
     '/dist/manifest.json',
     '/dist/bundle.js',
-    '/dist/icon_72x72.png',
-    '/dist/icon_96x96.png',
-    '/dist/icon_128x128.png',
-    '/dist/icon_144x144.png',
-    '/dist/icon_152x152.png',
-    '/dist/icon_192x192.png',
-    '/dist/icon_384x384.png',
-    '/dist/icon_512x512.png',
+    '/assets/icons/icon_192x192.png',
+    '/dist/icons/icon_512x512.png',
 ];
 
 // Listen for service worker install event once browser resgisters a service worker
@@ -76,4 +71,33 @@ self.addEventListener("activate", function(evt) {
     });
 
 // Fetch missing
-// check if db access (network connection, if not hit local cache for db info)
+self.addEventListener("fetch", function(evt) {
+    if (evt.request.url.includes("/api/")) {
+        evt.respondWith(
+            caches.open(CACHE_NAME).then(cache => {
+                return fetch(evt.request)
+                .then(response => {
+                    // If the response was good, clone it and store it in the cache.
+                    if (response.status === 200) {
+                        cache.put(evt.request.url, response.clone());
+                    }
+                    return response;
+                })
+                .catch(err => {
+                    // Network request failed, try to get it from the cache.
+                    return cache.match(evt.request);
+                });
+            })
+            .catch(err => console.log(err))
+        );
+        return;
+    }
+
+    evt.respondWith(
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.match(evt.request).then(response => {
+                return response || fetch(evt.request);
+            });
+        })
+    );
+});
