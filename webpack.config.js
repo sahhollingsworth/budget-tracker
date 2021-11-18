@@ -7,7 +7,7 @@ const config = {
         path: __dirname + "/public/dist",
         filename: "bundle.js"
     },
-    mode: "production",
+    mode: "development",
     plugins: [
         new WebpackPwaManifest({
             // the name of the generated manifest file
@@ -20,6 +20,7 @@ const config = {
 
             name: "Budget Tracker App",
             short_name: "Budget App",
+            description: "An application that allows you to dynamically track your budget",
             theme_color: "#ffffff",
             background_color: "#ffffff",
             start_url: "/",
@@ -28,11 +29,11 @@ const config = {
                     {
                     src: path.resolve( __dirname, "public/assets/icons/icon-512x512.png"),
                     // generate an image for each size in the size array
-                    size: [72, 96, 128, 144, 152, 192, 384, 512]
+                    size: '512x512'
                     },
                     {
                     src: path.resolve( __dirname, "public/assets/icons/icon-192x192.png"),
-                    size: [72, 96, 128, 144, 152, 192, 384, 512]
+                    size: '192x192'
                     }
                 ]
         })

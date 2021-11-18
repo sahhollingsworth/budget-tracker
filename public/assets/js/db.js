@@ -21,7 +21,7 @@ request.onsuccess = function(event) {
 
 // 
 request.onerror = function(event) {
-    console.log("Error encountered: " + event.target.errorCode);
+    console.log("The following error encountered: " + event.target.errorCode);
 };
 
 function saveRecord(record) {
