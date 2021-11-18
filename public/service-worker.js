@@ -20,54 +20,58 @@ const FILES_TO_CACHE = [
     '/dist/icon_512x512.png',
 ];
 
-// Installation
+// Listen for service worker install event once browser resgisters a service worker
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches
             .open(STATIC_CACHE)
             // add all files to the static cache
-            .then((cache) => cache.addAll(FILES_TO_CACHE))
+            .then(cache => {
+                cache.addAll(FILES_TO_CACHE)
+            })
             // Force the waiting service worker to become the active service worker (reloads the service worker)
             .then(self.skipWaiting())
     );
 });
 
-// Activation - Clear the cache of all items that aren't 1 of the 2 caches instantiated at the top
-self.addEventListener("activate", event => {
-    const currentCaches = [STATIC_CACHE, RUNTIME_CACHE];
-    event.waitUntil(
-        caches.keys()
-            // Return and chache names that aren't current
-            .then(cacheNames => {
-                return cacheNames.filter((cacheName) => !currentCaches.includes(cacheName));
-            })
-            // Delete any cache names that arent current
-            .then(cachesToDelete => {
-                return Promise.all(
-                    cachesToDelete.map(cacheToDelete => {
-                        return caches.delete(cacheToDelete);
-                    })
-                );
-            })
-        // Force the waiting service worker to become the active service worker (reloads the service worker)
-        .then(() => self.clients.claim())
-    );
-});
+// // Activation - Clear the cache of all items that aren't 1 of the 2 caches instantiated at the top
+// self.addEventListener("activate", event => {
+//     const currentCaches = [STATIC_CACHE, RUNTIME_CACHE];
+//     event.waitUntil(
+//         caches.keys()
+//         // Return and cache names that aren't current
+//         .then(cacheNames => {
+//             return cacheNames.filter((cacheName) => !currentCaches.includes(cacheName));
+//         })
+//         // Delete any cache names that arent current
+//         .then(cachesOther => {
+//             return Promise.all(
+//                 cachesOther.map(cacheOld => {
+//                     return caches.delete(cacheOld);
+//                 })
+//             );
+//         })
+//         // Force the waiting service worker to become the active service worker (reloads the service worker)
+//         .then(() => self.clients.claim())
+//     );
+// });
 
+// Clear the cache of all items that aren't 1 of the 2 caches instantiated at the top
 self.addEventListener("activate", function(evt) {
     evt.waitUntil(
         caches.keys().then(keyList => {
         return Promise.all(
             keyList.map(key => {
-            if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
-                console.log("Removing old cache data", key);
+            // Check each key to see if it should be deleted
+            if (key !== STATIC_CACHE && key !== RUNTIME_CACHE) {
+                console.log("Removing old cache data, ", key);
                 return caches.delete(key);
             }
             })
         );
         })
     );
-
+    // Force the waiting service worker to become the active service worker (reloads the service worker)
     self.clients.claim();
     });
 
